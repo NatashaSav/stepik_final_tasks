@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
 
-class MainPageLocators():
+class MainPageLocators:
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
 
 
@@ -15,3 +15,11 @@ class LoginPageLocators:
     REGISTER_PASSWORD_FOR_USER = (By.ID, "id_registration-password1")
     REGISTER_CONFIRM_PASSWORD_FOR_USER = (By.ID, "id_registration-password2")
     REGISTER_BUTTON = (By.NAME, "registration_submit")
+
+class ProductPageLocators:
+    BUTTON_ADD_TO_BASKET = (By.CSS_SELECTOR, ".product_main .btn-add-to-basket")
+    PRICE_BASKET = (By.CSS_SELECTOR, "div.alertinner p strong")
+    NAME_BOOK = (By.CSS_SELECTOR, ".product_main h1")
+    ACTUAL_MESSAGE = (By.CSS_SELECTOR, "#messages > div:nth-child(1) > div")
+    PRICE_PRODUCT = (By.CSS_SELECTOR, ".product_main p.price_color")
+
