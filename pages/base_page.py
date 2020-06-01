@@ -1,7 +1,9 @@
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from .locators import BasePageLocators
 import math
 import time
 
@@ -22,6 +24,26 @@ class BasePage():
             return False
         return True
 
+    def is_not_element_present(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return True
+
+        return False
+
+    def is_disappeared(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException). \
+                until_not(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+
+        return True
+
+# эта функция используется начиная с "Задание: независимость контента, ищем баг"
+# при ее использовании аналогичная функция нуже должна быть закоментирована
+
     def solve_quiz_and_get_code(self):
         try:
             WebDriverWait(self.browser, 1000).until(EC.alert_is_present())
@@ -35,13 +57,16 @@ class BasePage():
             # alert.send_keys(answer)
             alert.accept()
 
-
             # alert = self.browser.switch_to.alert
             # alert_text = alert.text
             # print(f"Your code: {alert_text}")
             # alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
+
+# эта функция используеться для "Задание: добавление в корзину со страницы товара"
+# когда ее вызиваем, то функцию solve_quiz_and_get_code, что выше коментируем, а эту розкоментируем
+
 
     # def solve_quiz_and_get_code(self):
     #     alert = self.browser.switch_to.alert
@@ -56,5 +81,21 @@ class BasePage():
     #         alert.accept()
     #     except NoAlertPresentException:
     #         print("No second alert presented")
+
+
+    def go_to_login_page(self):
+        link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
+        link.click()
+
+    def should_be_login_link(self):
+        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
+
+    def can_go_to_login_link(self):
+        link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
+        link.click()
+    #
+    # def should_be_authorized_user(self):
+    #     assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
+    #                                                                  " probably unauthorised user"
 
 
