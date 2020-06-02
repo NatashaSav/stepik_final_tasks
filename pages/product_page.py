@@ -13,16 +13,13 @@ class ProductPage(BasePage):
         actual_message = self.browser.find_element(*ProductPageLocators.ACTUAL_MESSAGE).text
         expect_message = name_current_book + ' has been added to your basket.'
         assert actual_message in expect_message, "Name book in message not found"
-        # pytest -rx -v unit/fixut/test_product_page.py
+
 
     def message_with_cost_basket(self):
         price_basket = self.browser.find_element(*ProductPageLocators.PRICE_BASKET).text
         price_product = self.browser.find_element(*ProductPageLocators.PRICE_PRODUCT).text
         assert price_basket == price_product, "prices is different"
 
-    # def should_be_success_message(self):
-    #     assert self.is_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
-    #         "Success message is not presented"
 
     def should_not_be_success_message(self):
         assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
