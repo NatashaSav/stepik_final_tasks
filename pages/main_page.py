@@ -8,6 +8,9 @@ class MainPage(BasePage):
     def __init__(self, *args, **kwargs):
         super(MainPage, self).__init__(*args, **kwargs)
 
+
+# код использовался до того момента, пока не была поставлена заглушка. Тема "Плюсы наследования: пример"
+
 # def go_to_login_page(self):
 #     assert self.is_element_present(*MainPageLocators.LOGIN_LINK), "do not go to the login link"
 #
